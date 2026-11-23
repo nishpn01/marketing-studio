@@ -1,0 +1,6 @@
+{
+  "schema_version": "studio.context/0.1",
+  "files": [
+    {"path": "context/style-guide.md", "roles": ["writer", "craft_reviewer"], "purpose": "Brand voice, style, formatting and banned patterns"}
+  ]
+}

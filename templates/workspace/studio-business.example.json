@@ -1,0 +1,22 @@
+{
+  "schema_version": "studio.business/0.1",
+  "workspace_id": "example-business",
+  "_note": "Lives at the root of a PRIVATE business workspace. Owner-maintained and trusted: it decides which local files the Director may search and cite. Core ships no business data.",
+  "vars": { "DOCS": "/absolute/path/to/your/docs" },
+  "allowed_roots": ["${DOCS}"],
+  "defaults": {
+    "audience": "who the newsletter is for",
+    "provider": "claude-code-cli",
+    "models": { "director": "sonnet", "writer": "sonnet", "fact_reviewer": "sonnet", "craft_reviewer": "sonnet" },
+    "budget": { "max_model_calls": 12, "max_steps": 40, "max_revision_rounds": 1 }
+  },
+  "catalog": [
+    { "id": "style-guide", "path": "${DOCS}/style-guide.md", "visibility": "approved", "description": "Style guidance" },
+    { "id": "product-brief", "path": "${DOCS}/product-brief.md", "visibility": "approved", "description": "What the product does today",
+      "exclude_headings": ["## Internal pricing"], "redact": ["an exact sentence that must never leave this workspace"] },
+    { "id": "founder-notes", "path": "${DOCS}/notes/2026-10-01.md", "visibility": "restricted", "description": "Private notes; claims need owner approval to disclose" }
+  ],
+  "context_sync": [
+    { "from": "${DOCS}/style-guide.md", "to": "context/style-guide.md" }
+  ]
+}

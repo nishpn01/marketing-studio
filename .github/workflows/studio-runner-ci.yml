@@ -1,0 +1,48 @@
+name: Studio Runner — local mock regression
+on:
+  push:
+    branches:
+      - main
+      - studio-runner-step1-hardening
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-validation:
+    name: Offline tests / Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.16.0', '26']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Runtime versions
+        run: |
+          node --version
+          python3 --version
+          npm --version
+      - name: Check Node's built-in SQLite / TypeScript support
+        run: |
+          node --experimental-strip-types studio-runner/src/cli.ts doctor
+      - name: Existing Python metadata validator tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Static TypeScript check (pinned tools in a temp dir; no repo dependency)
+        run: |
+          npm install --no-save --no-audit --no-fund --prefix "$RUNNER_TEMP/tsc" typescript@5.9.3 @types/node@24.19.2
+          "$RUNNER_TEMP/tsc/node_modules/.bin/tsc" -p studio-runner/tsconfig.json --typeRoots "$RUNNER_TEMP/tsc/node_modules/@types"
+      - name: Verify generated host shims are committed
+        run: node --experimental-strip-types hosts/generate.ts --check
+      - name: Local Runner regression tests using checked-out source
+        run: npm --prefix studio-runner test
+      - name: Verify no runner secrets or simulated draft artifacts committed
+        run: |
+          ! git ls-files studio-runner | grep -E '(^|/)(\.studio/|\.env|runs\.sqlite|api-key|private-token)'

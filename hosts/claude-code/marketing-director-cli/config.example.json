@@ -1,0 +1,6 @@
+{
+  "studio_bin": "/absolute/path/to/marketing-studio-core/studio-runner/bin/studio",
+  "workspaces": {
+    "my-business": "/absolute/path/to/private-business-repo/studio"
+  }
+}

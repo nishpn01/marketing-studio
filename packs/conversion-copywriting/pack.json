@@ -1,0 +1,26 @@
+{
+  "schema_version": "studio.capability-pack/0.1",
+  "id": "conversion-copywriting",
+  "version": "0.1.0",
+  "pipeline": "text-asset",
+  "roles": {
+    "director": {"prompt": "prompts/director.md", "skills": ["core/DIRECTOR.md", "core/RESEARCH-AND-EVIDENCE-CONTRACT.md", "skills/copywriting/STRATEGY-CHECK.md", "specialists/copywriting/WORKFLOW.md"], "model_tier": "strategy"},
+    "writer": {"prompt": "prompts/writer.md", "skills": ["specialists/copywriting/AGENT.md", "specialists/copywriting/WORKFLOW.md", "skills/copywriting/MESSAGE-CRAFT.md"], "model_tier": "writing"},
+    "fact_reviewer": {"prompt": "../shared/fact-reviewer.md", "skills": ["core/QUALITY-GATE-CONTRACT.md"], "model_tier": "review"},
+    "craft_reviewer": {"prompt": "prompts/craft-reviewer.md", "skills": ["specialists/copywriting/QUALITY.md", "skills/copywriting/READER-EVALUATION.md", "skills/prose-unslop-review/SKILL.md"], "model_tier": "review"}
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["title", "draft_markdown", "claims", "notes_for_owner"],
+    "additionalProperties": true,
+    "properties": {
+      "title": {"type": "string", "minLength": 1},
+      "draft_markdown": {"type": "string", "minLength": 1},
+      "claims": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["id", "text", "draft_quote", "source_ids"], "additionalProperties": true, "properties": {"id": {"type": "string", "minLength": 1}, "text": {"type": "string", "minLength": 1}, "draft_quote": {"type": "string", "minLength": 1}, "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}}},
+      "notes_for_owner": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "gates": {"min_draft_words": 20, "claim_quotes_exact": true, "claims_require_sources": true},
+  "qa_rubric": "specialists/copywriting/QUALITY.md",
+  "budget_defaults": {"max_model_calls": 12, "max_steps": 40, "max_revision_rounds": 1}
+}

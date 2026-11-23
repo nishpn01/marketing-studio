@@ -1,0 +1,32 @@
+# Generic example only — real owner conversations and tenant context stay private.
+workspace_id: example-tenant
+ideas:
+  - id: idea-0001
+    status: CAPTURED  # RESEARCHING | CANDIDATE | PARKED | REJECTED | BRIEF_APPROVED | DRAFTING | IN_REVIEW | ASSET_APPROVED | PUBLICATION_AUTHORIZED | PUBLISHED | MEASURED | ARCHIVED
+    source:
+      type: owner-conversation
+      uri: "REPLACE_WITH_PERMISSIONED_SOURCE_POINTER"
+      captured_at: "YYYY-MM-DDTHH:MM:SSZ"
+      visibility: private
+    intent: brainstorm # brainstorm | explore | decide | feedback | delegate | authorize
+    idea: "A practical editorial series about building a small product"
+    current_goal: "Explore the newsletter format"
+    future_options:
+      - "Potential book after source-backed issues exist"
+    assumptions: []
+    unresolved_questions:
+      - "Which reader stage does the first issue serve?"
+    audience_hypotheses:
+      - "First-time builders using AI"
+    channel_candidates:
+      - newsletter
+      - seo
+    related_ideas: []
+    researched_sources: []
+    suggested_next_step: "Research user question and original artifacts"
+    approvals:
+      editorial_direction: false
+      draft_version: null
+      publication_destination: null
+      publish_authorized: false
+    decision_log: []

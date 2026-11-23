@@ -1,0 +1,14 @@
+{
+  "name": "@marketing-studio/local-runner",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Draft-only offline-first marketing runner proof of execution",
+  "type": "module",
+  "engines": {"node": ">=22.16.0"},
+  "scripts": {
+    "doctor": "node --experimental-strip-types src/cli.ts doctor",
+    "test": "node --experimental-strip-types --test test/*.test.ts test/adversarial/*.test.ts test/review/*.test.ts test/review-opus/*.test.ts test/review-final/*.test.ts",
+    "run": "node --experimental-strip-types src/cli.ts",
+    "service": "node --experimental-strip-types src/service/studio-service.ts"
+  }
+}

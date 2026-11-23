@@ -1,0 +1,45 @@
+{
+  "manifest_version": "0.3",
+  "name": "studio-bridge",
+  "display_name": "Marketing Studio (local bridge)",
+  "version": "0.1.0",
+  "description": "Lets Claude desktop talk to the Marketing Studio Service running on this laptop. Loopback only.",
+  "long_description": "Forwards MCP over stdio to http://127.0.0.1:<port>/mcp with your Studio token. It opens no port, adds no tools and decides nothing: the Studio Service checks the token and owns every tool. Approvals still happen in the Studio Inbox on this laptop.",
+  "author": { "name": "Marketing Studio Core" },
+  "license": "MIT",
+  "server": {
+    "type": "node",
+    "entry_point": "index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/index.js"],
+      "env": {
+        "STUDIO_TOKEN": "${user_config.token}",
+        "STUDIO_PORT": "${user_config.port}"
+      }
+    }
+  },
+  "tools_generated": true,
+  "compatibility": {
+    "platforms": ["darwin", "win32"],
+    "runtimes": { "node": ">=20.3.0" }
+  },
+  "user_config": {
+    "token": {
+      "type": "string",
+      "title": "Studio token",
+      "description": "The output of: cat ~/.studio-service/tenants/*/token. Stored by Claude desktop, sent only to 127.0.0.1.",
+      "sensitive": true,
+      "required": true
+    },
+    "port": {
+      "type": "number",
+      "title": "Studio Service port",
+      "description": "The port the Studio Service listens on at 127.0.0.1.",
+      "default": 8765,
+      "min": 1024,
+      "max": 65535,
+      "required": true
+    }
+  }
+}

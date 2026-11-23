@@ -1,0 +1,124 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "GATE-01",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-gate-01",
+    "mode": "one_off",
+    "idea": "Evaluate whether a draft without a Markdown H1 is blocked by the metadata gate.",
+    "audience": "small teams reporting work without overstating denominators",
+    "source_paths": [
+      "sources/activity.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "newsletter",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/activity.md",
+      "visibility": "approved",
+      "text": "The activity log contains eight rows. One row spans three versions of the system. The log does not count eight separate edits, and the denominator must stay tied to what was actually recorded."
+    }
+  ],
+  "recorded_system_sha256": {
+    "director": "5505dcded93a182c027c6278f34c5f55278498454108e30a007b5354d7fb5ced",
+    "writer": "1d6de0239924d6d7923391ba3f6c5b907399cc365e89bb8167097eca7f59f3fe",
+    "fact_reviewer": "147200ba7713d6b976cc0c96f4c2de62478cc0807561653898a7870b29072705",
+    "craft_reviewer": "34db4e2e2db0e8fd6b50718d1f487522d080c3435f426919daa922a06500c11f"
+  },
+  "responses": {
+    "director": {
+      "decision": "proceed",
+      "reason": "The log supports describing rows and their limitation.",
+      "reader_question": "What does the activity count mean?",
+      "angle": "Name the unit being counted instead of upgrading rows into edits.",
+      "alternatives_considered": [
+        {
+          "angle": "An exact productivity count",
+          "why_not": "Rows are not edits."
+        },
+        {
+          "angle": "A success story",
+          "why_not": "The log has no outcome."
+        }
+      ],
+      "reader_promise": "You will see the count and its limitation.",
+      "evidence_plan": [
+        {
+          "point": "Eight rows include a multi-version row",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "exclusions": [
+        "Do not call rows edits."
+      ],
+      "open_questions_for_owner": [],
+      "length_words": 100
+    },
+    "writer": {
+      "title": "Count the unit, not the rows",
+      "draft_markdown": "Count the unit, not the rows\n\nA small team had a question it could not answer from a hunch alone. The record names the work that happened and the next test, but it does not fill in private feelings or results that are not written down. That distinction matters. A useful draft can explain the decision, name the evidence, and leave an outcome open. Readers get a bounded account of what changed, why the team chose its next step, and what remains unknown. The source-backed claim is: I edited the system exactly eight times.",
+      "claims": [
+        {
+          "id": "c01",
+          "text": "The system was edited exactly eight times.",
+          "draft_quote": "I edited the system exactly eight times",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "notes_for_owner": []
+    },
+    "fact_reviewer": {
+      "claims": [
+        {
+          "claim_id": "c01",
+          "verdict": "unsupported",
+          "note": "The source records eight rows, including one spanning three versions, not eight edits."
+        }
+      ],
+      "unlisted_claims": [],
+      "summary": "The denominator is overstated."
+    },
+    "craft_reviewer": {
+      "verdict": "ready",
+      "reader_promise_met": true,
+      "strengths": [
+        {
+          "excerpt": "That distinction matters",
+          "why": "It supports a clear correction."
+        }
+      ],
+      "findings": [],
+      "summary": "The craft is acceptable once the unit is corrected."
+    }
+  },
+  "expected": {
+    "status": "BLOCKED_QA",
+    "blockers": [],
+    "fact_verdicts": {},
+    "metadata_gate_exit_code": 1,
+    "current_version": null
+  }
+}

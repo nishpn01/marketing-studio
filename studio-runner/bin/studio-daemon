@@ -1,0 +1,29 @@
+#!/bin/sh
+# Runs under launchd AS THE SERVICE USER (the tracked authority milestone). Starts the Service, then publishes a read-only token copy
+# and the log (setup code) to the public dir, readable only by the owner login user via an ACL.
+set -eu
+umask 077
+exec >>"$STUDIO_PUBLIC/service.log" 2>&1
+grant() { chmod 600 "$1"; chmod -N "$1" 2>/dev/null || true; chmod +a "user:$STUDIO_OWNER allow read" "$1"; }
+grant "$STUDIO_PUBLIC/service.log"
+service="$STUDIO_CODE/studio-runner/src/service/studio-service.ts"
+set -- --data-root "$STUDIO_DATA" --tenant "$STUDIO_TENANT" --provider "$STUDIO_PROVIDER" --port "$STUDIO_PORT" --workspace "$STUDIO_CODE/templates/workspace/studio-self"
+# The Service alone knows where this tenant's token is (never recompute its directory name here); an older tenant's token must never be picked up.
+tokenfile=$("$STUDIO_NODE" --experimental-strip-types --no-warnings "$service" "$@" --print-token-path)
+"$STUDIO_NODE" --experimental-strip-types --no-warnings "$service" "$@" &
+pid=$!
+trap 'kill "$pid" 2>/dev/null' TERM INT
+i=0
+# Check for the token BEFORE checking the process is alive, so a fast exit still publishes what it created.
+while [ "$i" -lt 60 ]; do
+  # -s: the Service creates the file before it writes it; never publish an empty copy.
+  if [ -s "$tokenfile" ]; then
+    cp "$tokenfile" "$STUDIO_PUBLIC/.token.tmp"
+    grant "$STUDIO_PUBLIC/.token.tmp"
+    mv "$STUDIO_PUBLIC/.token.tmp" "$STUDIO_PUBLIC/token"
+    break
+  fi
+  kill -0 "$pid" 2>/dev/null || break
+  i=$((i + 1)); sleep 1
+done
+wait "$pid"

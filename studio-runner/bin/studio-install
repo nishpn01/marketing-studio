@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Owner tool (the tracked authority milestone). Run with --dry-run first; install/uninstall need sudo. See docs/operations/SEPARATE-USER-INSTALL.md.
+set -eu
+here=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec node --experimental-strip-types --no-warnings "$here/../src/separate-user-install.ts" "$@"

@@ -1,0 +1,26 @@
+workspace_id: sample-business
+workspace_name: "Replace with business name"
+access: private
+owner_approval_required_for_publication: true
+sources:
+  - id: product-truth
+    kind: authoritative-business-facts
+    uri: "REPLACE_WITH_AUTHORIZED_URL"
+    classification: internal
+    verified_at: null
+  - id: audience-research
+    kind: market-evidence
+    uri: "REPLACE_WITH_AUTHORIZED_FOLDER"
+    classification: internal
+    verified_at: null
+  - id: stories
+    kind: approved-story-notes
+    uri: "REPLACE_WITH_AUTHORIZED_FOLDER"
+    classification: restricted
+    verified_at: null
+tools:
+  linear: not-configured
+  drive: not-configured
+  cms: not-configured
+  email: not-configured
+  socials: not-configured

@@ -1,0 +1,19 @@
+{
+  "schema_version": "studio.workspace/0.1",
+  "workspace_id": "riverside-tool-library",
+  "note": "Synthetic fictional tenant for tests and demos. Not a real organisation.",
+  "sources": [
+    {
+      "path": "sources/volunteer-log.md",
+      "visibility": "approved"
+    },
+    {
+      "path": "sources/member-comments.md",
+      "visibility": "approved"
+    },
+    {
+      "path": "sources/committee-decision.md",
+      "visibility": "approved"
+    }
+  ]
+}

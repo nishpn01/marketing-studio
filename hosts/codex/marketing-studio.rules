@@ -1,0 +1,16 @@
+# Marketing Studio authority rules for Codex execpolicy (host UX guidance, NOT cryptographic or OS enforcement).
+# Matches only commands whose first tokens are the installed studio binary and a listed subcommand, so
+# `sh -c`, node, another binary path or a copied binary are NOT covered. Placeholder replaced by install.sh.
+# Check offline: codex execpolicy check --rules <this file> <command tokens...>
+STUDIO_BIN = "__STUDIO_BIN__"
+AUTHORITY = ["source-disclosure-grant", "source-disclosure-revoke", "capture-disclosure-grant", "capture-disclosure-revoke",
+  "capture-disclosure-read", "capture-import", "capture-annotate", "direction-approve", "approve", "improvement-decide", "improvement-propose",
+  "session-run", "session-rerun", "run", "resume", "revise", "cancel", "handoff-check", "eval", "onboard",
+  "evidence-add"]  # evidence-add can carry --visibility/--owner-quote; execpolicy cannot match flags, so always prompt
+READONLY = ["session-start", "session-status", "session-note", "context-sync", "context-search", "evidence-remove",
+  "improvement-list", "improvement-handoff", "improvement-record", "improvement-close", "capture-list", "capture-show",
+  "source-disclosure-list", "status", "inspect", "doctor", "handoff-prompt", "handoff-score"]
+for c in AUTHORITY:
+    prefix_rule(pattern = [STUDIO_BIN, c], decision = "prompt", justification = "Owner-authority or model-spending Studio command: needs the owner's explicit confirmation.")
+for c in READONLY:
+    prefix_rule(pattern = [STUDIO_BIN, c], decision = "allow")

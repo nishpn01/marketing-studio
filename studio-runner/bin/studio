@@ -1,0 +1,4 @@
+#!/bin/sh
+# Marketing Studio CLI. Usage: studio <command> --workspace <business-workspace> ...
+here="$(cd "$(dirname "$0")" && pwd)"
+exec node --experimental-strip-types --no-warnings "$here/../src/cli.ts" "$@"

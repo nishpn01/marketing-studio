@@ -1,0 +1,12 @@
+{
+  "schema_version": "studio.request/0.2",
+  "workspace_id": "riverside-tool-library",
+  "mode": "one_off",
+  "idea": "Write a newsletter issue about how a small volunteer group worked out its real problem before buying software. Our members and other small groups might learn from it.",
+  "audience": "volunteer organisers and small nonprofit coordinators",
+  "source_paths": ["sources/volunteer-log.md", "sources/member-comments.md", "sources/committee-decision.md"],
+  "provider": "claude-code-cli",
+  "models": {"director": "sonnet", "writer": "sonnet", "fact_reviewer": "sonnet", "craft_reviewer": "sonnet"},
+  "budget": {"max_model_calls": 12, "max_steps": 40, "max_revision_rounds": 1},
+  "permissions": {"actions": ["read_sources", "write_private_draft", "run_metadata_gate"]}
+}

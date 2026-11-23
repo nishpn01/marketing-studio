@@ -1,0 +1,145 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "QUALITY-01",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-quality-01",
+    "mode": "one_off",
+    "idea": "Evaluate whether a clean linter result proves human quality and approval.",
+    "audience": "small teams reviewing drafts beyond vocabulary scans",
+    "source_paths": [
+      "sources/linter.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "conversion-copywriting",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/linter.md",
+      "visibility": "approved",
+      "text": "The linter reports no banned vocabulary, but the real draft repeats identical structure and offers weak proof. A clean scan is not audience evidence, factual review, human authorship, or owner approval."
+    }
+  ],
+  "recorded_system_sha256": {
+    "director": "05da4abb859a17b532770fc2923da69f1c04b379d9590910d25fe32d87e599c4",
+    "writer": "78a046fcf78c7e1497bfd40f673ed58a28dae4496fde461773bf1e0f38406b84",
+    "fact_reviewer": "147200ba7713d6b976cc0c96f4c2de62478cc0807561653898a7870b29072705",
+    "craft_reviewer": "86ee7901f04dab15164abf84b71197789dd302e729ec8929127934244f27bb80"
+  },
+  "responses": {
+    "director": {
+      "decision": "proceed",
+      "reason": "The source supports separating a vocabulary scan from broader quality evidence.",
+      "reader_question": "What does a clean linter result prove?",
+      "angle": "Treat a scan as one narrow check, not as human approval.",
+      "alternatives_considered": [
+        {
+          "angle": "A quality certificate",
+          "why_not": "The scan is narrow."
+        },
+        {
+          "angle": "An approval record",
+          "why_not": "No owner approval is present."
+        }
+      ],
+      "reader_promise": "You will see the limits of a clean scan.",
+      "evidence_plan": [
+        {
+          "point": "The linter is clean but the draft is weak",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "exclusions": [
+        "Do not call the draft human or approved."
+      ],
+      "open_questions_for_owner": [],
+      "length_words": 100
+    },
+    "writer": {
+      "title": "A clean scan is not approval",
+      "draft_markdown": "# A clean scan is not approval\n\nA small team had a question it could not answer from a hunch alone. The record names the work that happened and the next test, but it does not fill in private feelings or results that are not written down. That distinction matters. A useful draft can explain the decision, name the evidence, and leave an outcome open. Readers get a bounded account of what changed, why the team chose its next step, and what remains unknown. The source-backed claim is: The linter reports no banned vocabulary.",
+      "claims": [
+        {
+          "id": "c01",
+          "text": "The linter reports no banned vocabulary.",
+          "draft_quote": "The linter reports no banned vocabulary",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "notes_for_owner": []
+    },
+    "fact_reviewer": {
+      "claims": [
+        {
+          "claim_id": "c01",
+          "verdict": "verified",
+          "source_id": "src_1",
+          "source_excerpt": "The linter reports no banned vocabulary",
+          "note": "The source supports the narrow scan result."
+        }
+      ],
+      "unlisted_claims": [],
+      "summary": "The factual claim is narrow and supported."
+    },
+    "craft_reviewer": {
+      "verdict": "revise",
+      "reader_promise_met": false,
+      "strengths": [
+        {
+          "excerpt": "That distinction matters",
+          "why": "It points toward a useful limit."
+        }
+      ],
+      "findings": [
+        {
+          "excerpt": "A clean scan is not approval",
+          "problem": "The draft still repeats a weak structure and does not prove human quality or owner approval.",
+          "suggestion": "Revise the structure and keep approval as an open owner decision.",
+          "severity": "must"
+        }
+      ],
+      "summary": "A linter result is not audience, narrative, factual, or human approval evidence."
+    }
+  },
+  "expected": {
+    "status": "WAITING_FOR_OWNER",
+    "blockers": [
+      "craft:1"
+    ],
+    "fact_verdicts": {
+      "verified": 1
+    },
+    "metadata_gate_exit_code": 0,
+    "current_version": "v002"
+  },
+  "rubric_expectations": {
+    "draft_contains": [
+      "bounded account"
+    ],
+    "draft_not_contains": [
+      "owner approved"
+    ]
+  }
+}

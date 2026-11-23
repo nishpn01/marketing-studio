@@ -1,0 +1,4 @@
+#!/bin/sh
+# Local stdio MCP server. Usage: studio-mcp --workspace <business-workspace> --tools context_search,session_status
+here="$(cd "$(dirname "$0")" && pwd)"
+exec node --experimental-strip-types --no-warnings "$here/../src/mcp-stdio.ts" "$@"

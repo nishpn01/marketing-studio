@@ -1,0 +1,20 @@
+{
+  "schema_version": "studio.business/0.1",
+  "workspace_id": "studio-self",
+  "_note": "Template. Replace the one CORE_CHECKOUT value with the absolute path of your marketing-studio-core clone (see README.md in this folder). Every source is a public doc of that clone. No private data.",
+  "vars": { "CORE_CHECKOUT": "/ABSOLUTE/PATH/TO/marketing-studio-core" },
+  "allowed_roots": ["${CORE_CHECKOUT}/README.md", "${CORE_CHECKOUT}/docs"],
+  "defaults": {
+    "audience": "builders and marketers curious about a laptop-only, bring-your-own-AI marketing studio, and how one is built in the open",
+    "provider": "claude-code-cli",
+    "models": { "director": "sonnet", "writer": "sonnet", "fact_reviewer": "sonnet", "craft_reviewer": "sonnet" },
+    "budget": { "max_model_calls": 12, "max_steps": 40, "max_revision_rounds": 1 }
+  },
+  "catalog": [
+    { "id": "readme", "path": "${CORE_CHECKOUT}/README.md", "visibility": "approved", "description": "What the Studio is and what works today" },
+    { "id": "architecture", "path": "${CORE_CHECKOUT}/docs/ARCHITECTURE.md", "visibility": "approved", "description": "How the Studio is built" },
+    { "id": "roadmap", "path": "${CORE_CHECKOUT}/docs/ROADMAP.md", "visibility": "approved", "description": "What is planned and what is deferred" },
+    { "id": "decisions", "path": "${CORE_CHECKOUT}/docs/DECISIONS.md", "visibility": "approved", "description": "Why the main design choices were made" }
+  ],
+  "context_sync": []
+}

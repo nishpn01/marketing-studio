@@ -1,0 +1,9 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "STYLE-01",
+  "live_only": true,
+  "live_only_reason": "This case tests whether a local date preference is incorrectly promoted to a global specialist rule; the v0 text-asset runner has no skill-promotion or policy-review action.",
+  "request": {"schema_version": "studio.request/0.2", "workspace_id": "eval-style-01", "mode": "one_off", "idea": "Evaluate a style preference about dates without promoting it globally.", "audience": "readers of a personal newsletter", "source_paths": ["sources/style-note.md"], "provider": "fixture", "pack_id": "newsletter", "models": {"director": "fixture", "writer": "fixture", "fact_reviewer": "fixture", "craft_reviewer": "fixture"}, "budget": {"max_model_calls": 12, "max_steps": 40, "max_revision_rounds": 1}, "permissions": {"actions": ["read_sources", "write_private_draft", "run_metadata_gate"]}},
+  "sources": [{"path": "sources/style-note.md", "visibility": "approved", "text": "The owner dislikes excess dates in this specific personal newsletter, while dates remain useful in news, research, and technical reports. This is a local preference, not a global rule."}],
+  "expected": {"status": "LIVE_ONLY"}
+}

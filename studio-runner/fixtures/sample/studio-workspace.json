@@ -1,0 +1,9 @@
+{
+  "schema_version": "studio.workspace/0.1",
+  "workspace_id": "example-tenant",
+  "note": "Synthetic fictional tenant for the offline mock quick start.",
+  "sources": [
+    {"path": "sources/workflow.md", "visibility": "approved"},
+    {"path": "sources/problem.md", "visibility": "approved"}
+  ]
+}

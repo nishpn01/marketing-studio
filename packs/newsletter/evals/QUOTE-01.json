@@ -1,0 +1,110 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "QUOTE-01",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-quote-01",
+    "mode": "one_off",
+    "idea": "Evaluate whether a stale metadata quote can pass after a draft revision.",
+    "audience": "small teams checking source associations after edits",
+    "source_paths": [
+      "sources/article.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "newsletter",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/article.md",
+      "visibility": "approved",
+      "text": "The revised article contains a new paragraph about the test and no longer contains the old paragraph that the first manifest quoted. The source itself remains available for checking."
+    }
+  ],
+  "recorded_system_sha256": {
+    "director": "5505dcded93a182c027c6278f34c5f55278498454108e30a007b5354d7fb5ced",
+    "writer": "1d6de0239924d6d7923391ba3f6c5b907399cc365e89bb8167097eca7f59f3fe",
+    "fact_reviewer": "147200ba7713d6b976cc0c96f4c2de62478cc0807561653898a7870b29072705",
+    "craft_reviewer": "34db4e2e2db0e8fd6b50718d1f487522d080c3435f426919daa922a06500c11f"
+  },
+  "responses": {
+    "director": {
+      "decision": "proceed",
+      "reason": "The source supports checking that metadata quotes remain literal after edits.",
+      "reader_question": "Does the review still point at this draft?",
+      "angle": "Keep exact metadata associations tied to the bytes under review.",
+      "alternatives_considered": [
+        {
+          "angle": "Trusting an old manifest",
+          "why_not": "The quote is stale."
+        },
+        {
+          "angle": "Skipping metadata checks",
+          "why_not": "Associations still need verification."
+        }
+      ],
+      "reader_promise": "You will see why a changed draft needs changed metadata.",
+      "evidence_plan": [
+        {
+          "point": "The old paragraph is absent",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "exclusions": [
+        "Do not reuse the old quote."
+      ],
+      "open_questions_for_owner": [],
+      "length_words": 100
+    },
+    "writer": {
+      "title": "Review the bytes you have",
+      "draft_markdown": "# Review the bytes you have\n\nA small team had a question it could not answer from a hunch alone. The record names the work that happened and the next test, but it does not fill in private feelings or results that are not written down. That distinction matters. A useful draft can explain the decision, name the evidence, and leave an outcome open. Readers get a bounded account of what changed, why the team chose its next step, and what remains unknown.",
+      "claims": [
+        {
+          "id": "c01",
+          "text": "The old paragraph is still the reviewed quote.",
+          "draft_quote": "Old paragraph no longer exists",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "notes_for_owner": []
+    },
+    "fact_reviewer": {
+      "claims": [],
+      "unlisted_claims": [],
+      "summary": "This role should not run because the writer quote is invalid."
+    },
+    "craft_reviewer": {
+      "verdict": "ready",
+      "reader_promise_met": true,
+      "strengths": [],
+      "findings": [],
+      "summary": "This role should not run."
+    }
+  },
+  "expected": {
+    "status": "FAILED_RECOVERABLE",
+    "error_contains": "draft_quote is not an exact substring"
+  }
+}

@@ -1,0 +1,11 @@
+{
+ "schema_version":"studio.request/0.1",
+ "workspace_id":"example-tenant",
+ "mode":"one_off",
+ "goal":"Explain how founders can research a recurring problem before specifying an MVP",
+ "audience":"curious first-time product builders",
+ "source_paths":["sources/workflow.md","sources/problem.md"],
+ "provider":"mock",
+ "budget":{"max_model_calls":3,"max_steps":9},
+ "permissions":{"actions":["read_sources","write_private_draft","run_metadata_gate"]}
+}

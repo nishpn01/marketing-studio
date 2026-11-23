@@ -1,0 +1,46 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "FORMAT-01",
+  "live_only": true,
+  "live_only_reason": "This case tests whether one fact is adapted to distinct newsletter, blog, and social reader tasks; v0 runs one text-asset pipeline and has no cross-channel adaptation or distribution route.",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-format-01",
+    "mode": "one_off",
+    "idea": "Evaluate channel-native adaptations of one verified fact.",
+    "audience": "readers across newsletter, blog, and social channels",
+    "source_paths": [
+      "sources/channels.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "conversion-copywriting",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/channels.md",
+      "visibility": "approved",
+      "text": "A newsletter and an SEO article may share a verified fact while serving distinct reader tasks. A social post needs its own native shape. Auto-posting identical paragraphs would ignore channel purpose."
+    }
+  ],
+  "expected": {
+    "status": "LIVE_ONLY"
+  }
+}

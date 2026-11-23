@@ -1,0 +1,130 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "STORY-01",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-story-01",
+    "mode": "one_off",
+    "idea": "Evaluate whether a project journal supports a personal failure story.",
+    "audience": "small teams learning to write honest case studies",
+    "source_paths": [
+      "sources/journal.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "newsletter",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/journal.md",
+      "visibility": "approved",
+      "text": "The project journal lists three revisions and their dates. It records changes to the work but does not record what the speaker felt or any private emotional reaction."
+    }
+  ],
+  "recorded_system_sha256": {
+    "director": "5505dcded93a182c027c6278f34c5f55278498454108e30a007b5354d7fb5ced",
+    "writer": "1d6de0239924d6d7923391ba3f6c5b907399cc365e89bb8167097eca7f59f3fe",
+    "fact_reviewer": "147200ba7713d6b976cc0c96f4c2de62478cc0807561653898a7870b29072705",
+    "craft_reviewer": "34db4e2e2db0e8fd6b50718d1f487522d080c3435f426919daa922a06500c11f"
+  },
+  "responses": {
+    "director": {
+      "decision": "proceed",
+      "reason": "The source supports a bounded distinction between recorded changes and missing feelings.",
+      "reader_question": "What does the journal actually support?",
+      "angle": "Separate recorded revisions from invented inner experience.",
+      "alternatives_considered": [
+        {
+          "angle": "A dramatic retelling",
+          "why_not": "The source has no feelings."
+        },
+        {
+          "angle": "A universal writing rule",
+          "why_not": "One journal cannot support it."
+        }
+      ],
+      "reader_promise": "You will see what is known and what remains unknown.",
+      "evidence_plan": [
+        {
+          "point": "The journal records revisions",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "exclusions": [
+        "Do not invent feelings."
+      ],
+      "open_questions_for_owner": [],
+      "length_words": 100
+    },
+    "writer": {
+      "title": "What the journal does not say",
+      "draft_markdown": "# What the journal does not say\n\nA small team had a question it could not answer from a hunch alone. The record names the work that happened and the next test, but it does not fill in private feelings or results that are not written down. That distinction matters. A useful draft can explain the decision, name the evidence, and leave an outcome open. Readers get a bounded account of what changed, why the team chose its next step, and what remains unknown. The source-backed claim is: I was embarrassed and knew I had failed.",
+      "claims": [
+        {
+          "id": "c01",
+          "text": "The speaker was embarrassed and knew they had failed.",
+          "draft_quote": "I was embarrassed and knew I had failed",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "notes_for_owner": []
+    },
+    "fact_reviewer": {
+      "claims": [
+        {
+          "claim_id": "c01",
+          "verdict": "verified",
+          "source_id": "src_1",
+          "source_excerpt": "The speaker was embarrassed and knew they had failed.",
+          "note": "The reviewer supplied a fabricated excerpt; the runner must reject the verified label."
+        }
+      ],
+      "unlisted_claims": [],
+      "summary": "The reviewer falsely labels an invented feeling as verified."
+    },
+    "craft_reviewer": {
+      "verdict": "ready",
+      "reader_promise_met": true,
+      "strengths": [
+        {
+          "excerpt": "That distinction matters",
+          "why": "It draws a useful boundary."
+        }
+      ],
+      "findings": [],
+      "summary": "The craft is acceptable once factual blockers are handled."
+    }
+  },
+  "expected": {
+    "status": "WAITING_FOR_OWNER",
+    "blockers": [
+      "claim:c01"
+    ],
+    "fact_verdicts": {
+      "not_checked": 1
+    },
+    "metadata_gate_exit_code": 0,
+    "current_version": "v001"
+  }
+}

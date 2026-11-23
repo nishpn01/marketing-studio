@@ -1,0 +1,136 @@
+{
+  "schema_version": "studio.eval-case/0.1",
+  "id": "CLEAN-01",
+  "request": {
+    "schema_version": "studio.request/0.2",
+    "workspace_id": "eval-clean-01",
+    "mode": "one_off",
+    "idea": "Evaluate a supported offer, benefit, proof, and call to action with an exact source excerpt.",
+    "audience": "small teams reviewing clean conversion drafts",
+    "source_paths": [
+      "sources/search-log.md"
+    ],
+    "provider": "fixture",
+    "pack_id": "conversion-copywriting",
+    "models": {
+      "director": "fixture",
+      "writer": "fixture",
+      "fact_reviewer": "fixture",
+      "craft_reviewer": "fixture"
+    },
+    "budget": {
+      "max_model_calls": 12,
+      "max_steps": 40,
+      "max_revision_rounds": 1
+    },
+    "permissions": {
+      "actions": [
+        "read_sources",
+        "write_private_draft",
+        "run_metadata_gate"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "path": "sources/search-log.md",
+      "visibility": "approved",
+      "text": "The offer includes a 14-day trial, a setup checklist, proof from three customer case studies, and a Start trial call to action. Each element is listed in the launch notes."
+    }
+  ],
+  "recorded_system_sha256": {
+    "director": "05da4abb859a17b532770fc2923da69f1c04b379d9590910d25fe32d87e599c4",
+    "writer": "78a046fcf78c7e1497bfd40f673ed58a28dae4496fde461773bf1e0f38406b84",
+    "fact_reviewer": "147200ba7713d6b976cc0c96f4c2de62478cc0807561653898a7870b29072705",
+    "craft_reviewer": "86ee7901f04dab15164abf84b71197789dd302e729ec8929127934244f27bb80"
+  },
+  "responses": {
+    "director": {
+      "decision": "proceed",
+      "reason": "The launch notes support naming the offer, benefit, proof, and CTA.",
+      "reader_question": "What does the offer include?",
+      "angle": "Name each supported element without adding unsupported outcomes.",
+      "alternatives_considered": [
+        {
+          "angle": "A universal conclusion",
+          "why_not": "The search was narrow."
+        },
+        {
+          "angle": "A customer-research report",
+          "why_not": "No interviews were retrieved."
+        }
+      ],
+      "reader_promise": "You will see the listed offer elements.",
+      "evidence_plan": [
+        {
+          "point": "The offer lists a trial, checklist, proof, and CTA",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "exclusions": [
+        "Do not claim nobody was interviewed."
+      ],
+      "open_questions_for_owner": [],
+      "length_words": 100
+    },
+    "writer": {
+      "title": "What the offer includes",
+      "draft_markdown": "# What the offer includes\n\nA small team had a question it could not answer from a hunch alone. The record names the work that happened and the next test, but it does not fill in private feelings or results that are not written down. That distinction matters. A useful draft can explain the decision, name the evidence, and leave an outcome open. Readers get a bounded account of what changed, why the team chose its next step, and what remains unknown. The source-backed claim is: The offer includes a 14-day trial, a setup checklist, proof from three customer case studies, and a Start trial call to action.",
+      "claims": [
+        {
+          "id": "c01",
+          "text": "The offer includes a 14-day trial, a setup checklist, proof from three customer case studies, and a Start trial call to action.",
+          "draft_quote": "The offer includes a 14-day trial, a setup checklist, proof from three customer case studies, and a Start trial call to action.",
+          "source_ids": [
+            "src_1"
+          ]
+        }
+      ],
+      "notes_for_owner": []
+    },
+    "fact_reviewer": {
+      "claims": [
+        {
+          "claim_id": "c01",
+          "verdict": "verified",
+          "source_id": "src_1",
+          "source_excerpt": "The offer includes a 14-day trial, a setup checklist, proof from three customer case studies, and a Start trial call to action.",
+          "note": "The launch notes list every element."
+        }
+      ],
+      "unlisted_claims": [],
+      "summary": "The offer claim is supported."
+    },
+    "craft_reviewer": {
+      "verdict": "ready",
+      "reader_promise_met": true,
+      "strengths": [
+        {
+          "excerpt": "narrow search",
+          "why": "It gives the issue a useful scope."
+        }
+      ],
+      "findings": [],
+      "summary": "The craft is acceptable."
+    }
+  },
+  "expected": {
+    "status": "WAITING_FOR_OWNER",
+    "blockers": [],
+    "fact_verdicts": {
+      "verified": 1
+    },
+    "metadata_gate_exit_code": 0,
+    "current_version": "v001"
+  },
+  "rubric_expectations": {
+    "draft_contains": [
+      "bounded account"
+    ],
+    "draft_not_contains": [
+      "owner approved"
+    ]
+  }
+}
